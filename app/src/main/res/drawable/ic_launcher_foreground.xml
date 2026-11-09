@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Bulan sabit -->
+    <path android:fillColor="#F4C95D"
+        android:pathData="M54,22a14,14 0,1 0,10.5 23.3a11,11 0,1 1,-10.5 -23.3z"/>
+    <!-- Kitab terbuka -->
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M54,56c-5,-3.2 -12,-4.8 -19,-4.8c-2.6,0 -5.2,0.3 -7,0.8v28c1.8,-0.6 4.4,-0.9 7,-0.9c7,0 14,1.6 19,4.8c5,-3.2 12,-4.8 19,-4.8c2.6,0 5.2,0.3 7,0.9V52c-1.8,-0.5 -4.4,-0.8 -7,-0.8C66,51.2 59,52.8 54,56z"/>
+    <path android:fillColor="#0F5132"
+        android:pathData="M52.8,58.5h2.4v24h-2.4z"/>
+</vector>

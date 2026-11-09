@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.InputStream
 import java.util.zip.GZIPInputStream
 
 /** Database bawaan (assets/alquran_hadits.db.gz) disalin & diekstrak sekali saat pertama dibuka. */
@@ -25,7 +26,17 @@ object Db {
         target.parentFile?.mkdirs()
         val tmp = File(target.parentFile, "$NAME.tmp")
         val expected = ctx.assets.open("db_size.txt").bufferedReader().use { it.readText().trim().toLong() }
-        GZIPInputStream(BufferedInputStream(ctx.assets.open("$NAME.gz"), 1 shl 16), 1 shl 16).use { input ->
+        // Aset disimpan sebagai gzip berekstensi .dat (AGP memperlakukan *.gz secara khusus).
+        // Cadangan: jika build membongkarnya menjadi file .db biasa, salin apa adanya.
+        val names = ctx.assets.list("")?.toSet() ?: emptySet()
+        val source: InputStream = when {
+            "alquran_hadits.dat" in names ->
+                GZIPInputStream(BufferedInputStream(ctx.assets.open("alquran_hadits.dat"), 1 shl 16), 1 shl 16)
+            "$NAME.gz" in names -> GZIPInputStream(BufferedInputStream(ctx.assets.open("$NAME.gz"), 1 shl 16), 1 shl 16)
+            NAME in names -> BufferedInputStream(ctx.assets.open(NAME), 1 shl 16)
+            else -> throw IllegalStateException("File database tidak ditemukan di aplikasi")
+        }
+        source.use { input ->
             FileOutputStream(tmp).use { out ->
                 val buf = ByteArray(1 shl 16)
                 var total = 0L

@@ -42,6 +42,7 @@ android {
     }
     androidResources {
         noCompress.add("gz")
+        noCompress.add("dat")
     }
 }
 

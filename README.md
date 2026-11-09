@@ -47,7 +47,7 @@ Android 13+ akan meminta izin notifikasi. Di HP Xiaomi/Oppo/Vivo, matikan pengop
 
 ## Struktur
 ```
-app/src/main/assets/alquran_hadits.db.gz   database SQLite (FTS4) terkompresi
+app/src/main/assets/alquran_hadits.dat   database SQLite (FTS4) terkompresi
 app/src/main/java/id/alquranhadits/
   data/   Db (ekstrak & buka DB), Repo (kueri), TextNorm (normalisasi & stemming), Prefs
   notif/  Scheduler (AlarmManager), DailyReceiver, BootReceiver
@@ -59,7 +59,7 @@ tools/    skrip Python untuk membangun ulang database
 ```
 python3 tools/parse_kemenag.py kemenag_raw.txt quran_id.json quran.json      # teks PDF Kemenag → JSON
 python3 tools/build_db.py <folder hadits-*.txt> quran.json alquran_hadits.db  # butuh scikit-learn
-gzip -9 -c alquran_hadits.db > app/src/main/assets/alquran_hadits.db.gz
+gzip -9 -c alquran_hadits.db > app/src/main/assets/alquran_hadits.dat
 stat -c %s alquran_hadits.db > app/src/main/assets/db_size.txt
 ```
 Jika mengubah isi DB, naikkan `VERSION` di `data/Db.kt` agar DB lama di HP diganti.
